@@ -1,3 +1,5 @@
+
+
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -6,7 +8,7 @@ const Projects=require("./Routes/projectRoutes")
 app.use(express.json())
 
 const port = process.env.PORT || 7778;
-app.use('/project',Projects)
+app.use('/projects',Projects)
 app.get("/", (req, res) => {
   res.json({ message: "Welcome" }); 
 });

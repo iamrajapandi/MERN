@@ -12,4 +12,4 @@ const projectSchema=new mongoose.Schema({
 })
 
 const Projects=mongoose.model('Projects',projectSchema)
-module.exports=mongoose;
+module.exports=Projects;
