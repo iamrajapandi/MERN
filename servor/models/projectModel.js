@@ -8,6 +8,18 @@ const projectSchema=new mongoose.Schema({
     desc:{
         type:String,
         required:true
+    },
+    coverimg:{
+        type:String,
+        required:true
+    },
+    link:{
+        type:String,
+        required:false
+    },
+    git:{
+        type:String,
+        required:true
     }
 })
 
