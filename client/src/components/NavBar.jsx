@@ -1,47 +1,69 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Project', href: '/project' },
+  { name: 'Projects', href: '/projects' },
   { name: 'Contact', href: '/contact' },
 ];
 
 export default function Example() {
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [login, setLogin] = useState(false);
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setLogin(false);
+    localStorage.setItem('userName', emailRef.current.value);
+    console.log(emailRef.current.value, passRef.current.value);
+  };
+
   return (
     <>
-      {login && (
-        <div className="h-screen w-screen absolute top-0 left-0 bg-black/20 text-white flex justify-center items-center z-50">
-          <div className="h-[60%] w-[30%] z-50 flex flex-col bg-white">
-            <div className="h-[40%] w-full flex flex-row justify-center text-black bg-violet-600 items-center border-2">
-             Login
-            </div>
-            <div className="h-[90%] w-full flex flex-col justify-center text-black items-center">
-              <form action="" className='flex flex-col gap-7 '>
-             <input type="text" placeholder='name'  className=' p-2 focus:outline-none hover:border-2 border-b-slate-400  rounded-md '  required/>
-             <input type="email" placeholder='mail' className='p-2 focus:outline-none hover:border-2 border-b-slate-400  rounded-md' required/>
-             </form>
-            </div>
-            <div className="w-full h-[30%] flex flex-row justify-center items-center">
+     {login && (
+  <div className="fixed inset-0 bg-black/20 text-white flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg shadow-lg w-11/12 sm:w-1/3 lg:w-1/4 z-50 flex flex-col">
+      <div className="text-black text-lg font-semibold text-center bg-violet-600 rounded-t-lg p-4">
+        Login
+      </div>
+      <div className="p-4 flex flex-col justify-center text-black">
+        <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Name"
+            ref={emailRef}
+            className="p-2 border border-slate-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            ref={passRef}
+            className="p-2 border border-slate-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <div className="flex justify-center">
             <button
-                onClick={() => setLogin(false)}
-                className="p-3 h-[6 %] w-[50%] flex justify-center rounded-md items-center bg-green-500"
-              >
-                submit
-              </button>
-              
-            </div>
+              type="submit"
+              className="bg-green-500 text-white rounded-md py-2 px-4 hover:bg-green-600 transition"
+            >
+              Submit
+            </button>
           </div>
-        </div>
-      )}
+        </form>
+      </div>
+    </div>
+  </div>
+)}
+
 
       <div className="bg-black">
         <header className="absolute inset-x-0 top-0 z-50">
-          <nav aria-label="Global" className="flex translate-4  items-center justify-between p-4 lg:px-8 bg-gradient-to-r from-slate-900 to-slate-700 ">
+          <nav aria-label="Global" className="flex items-center justify-between p-4 lg:px-8 bg-gradient-to-r from-slate-900 to-slate-700">
             <div className="flex lg:flex-1 text-white">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
@@ -60,7 +82,7 @@ export default function Example() {
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
               {navigation.map((item) => (
-                <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-white hover:animate-bounce ">
+                <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-white hover:animate-bounce">
                   {item.name}
                 </a>
               ))}

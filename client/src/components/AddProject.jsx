@@ -1,13 +1,14 @@
-import { Plus } from 'lucide-react';
+import { Plus,Check,MessageCircleWarning,Trash } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { addproject } from '../services/api';
 import { Toaster, toast } from 'sonner';
 
-const AddProject = () => {
+const AddProject = ({fetchProjects}) => {
     const titleref = useRef(null);
     const descref = useRef(null);
     const linkref = useRef(null);
     const coverref = useRef(null);
+    const gitref=useRef(null);
     
     const handleAdd = async (e) => {
         e.preventDefault();
@@ -16,15 +17,25 @@ const AddProject = () => {
             desc: descref.current.value,
             link: linkref.current.value,
             coverimg: coverref.current.value,
+            git:gitref.current.value
         };
         
         try {
             const response = await addproject(projectdata);
             if (response.status === 201) {
                 toast.success("Project added successfully!");
+                toast('Project added!',{
+                    className: 'bg-gradient-to-r from-green-500 to-lime-500 rounded-lg shadow-lg text-white p-3 flex gap-5 text-lg font-bold',
+                    icon: <Check />,
+                });
+                fetchProjects()
+
             }
         } catch (error) {
-            toast.error("Error adding project: " + error);
+            toast('Error', {
+                className: 'bg-gradient-to-r from-yellow-500 to-amber-500 rounded-lg shadow-lg text-white p-3 flex gap-5 text-lg font-bold',
+                icon: <MessageCircleWarning />,
+            });
         }
         
         setvisible(false);
@@ -84,9 +95,16 @@ const AddProject = () => {
                                 className="p-3 bg-gray-100 w-full rounded  focus:outline-none hover:border-b-2 border-blue-700 ring-blue-600"  
                                 required 
                             />
+                            <input 
+                                type="text" 
+                                ref={gitref} 
+                                placeholder="Git URL" 
+                                className="p-3 bg-gray-100 w-full rounded  focus:outline-none hover:border-b-2 border-blue-700 ring-blue-600"  
+                                required 
+                            />
                             <button 
                                 type="submit" 
-                                className="w-full py-2 text-white bg-gradient-to-r from-gray-500 via-purple-600 to-purple-600 rounded hover:bg-gradient-to-br focus:ring-4 focus:ring-purple-300"
+                              className="w-full py-2 text-white bg-gradient-to-r from-gray-500 via-purple-600 to-purple-600 rounded hover:bg-gradient-to-br focus:ring-4 focus:ring-purple-300"
                             >
                                 Add Project
                             </button>

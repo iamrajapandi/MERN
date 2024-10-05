@@ -3,7 +3,7 @@ import { IoMdMail } from "react-icons/io";
 import { FaUserCheck } from "react-icons/fa";
 import { FaSquareGithub } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
-import { SiReactiveresume } from "react-icons/si";
+import { IoMdCall } from "react-icons/io";
 import { IoIosMail } from "react-icons/io";
 
 const Contact = () => {
@@ -21,7 +21,7 @@ const Contact = () => {
         <div className="w-full max-w-[400px] border-2 shadow-lg rounded-md">
           <h1 className="h-full w-full flex font-extrabold font-serif text-xl sm:text-2xl justify-center items-center p-4">
             <IoMdMail className="text-red-500" />
-            rrajapandi456@gmail.com
+            rajapandir456@gmail.com
           </h1>
         </div>
         <div className="flex flex-wrap gap-4 border-2 shadow-sm rounded-md p-4 w-[70%] max-w-[600px]">
@@ -37,14 +37,14 @@ const Contact = () => {
           </div>
           <div className="flex text-3xl text-red-500 justify-center items-center border-2 shadow-sm rounded-md p-4 flex-1 min-w-[120px]">
             <a
-              href="file:///C:/Users/rraja/Downloads/714021106074__R%20Raja%20pandi_ECE.pdf"
+              href="tel:+234567890"
               target="_blank"
             >
-              <SiReactiveresume />
+              <IoMdCall />
             </a>
           </div>
           <div className="flex text-3xl text-red-900 justify-center items-center border-2 shadow-sm rounded-md p-4 flex-1 min-w-[120px]">
-            <a href="mailto:rrajapandi456@gmail.com" target="_blank">
+            <a href="mailto:rajapandir456@gmail.com" target="_blank">
               <IoIosMail />
             </a>
           </div>

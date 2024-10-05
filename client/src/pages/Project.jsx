@@ -1,57 +1,61 @@
-
-
-
-import { useEffect, useState } from "react"
-import Navbar from "../components/NavBar"
-import ProjectCard from "../components/ProjectCard"
-import { getproj } from "../services/api"
-import AddComponent from "../components/AddProject"
-import dogimg from '../assets/img/electrinics image.jpeg';
-import vetImg from '../assets/img/vet img.jpeg';
-import crackerImg from '../assets/img/craker img.jpeg';
-
-const img = [
-  { name: dogimg,proj:"ElectronicsHub",desc:"This project showcases a curated collection of essential electronic items" },
-  { name: vetImg,proj:"VetConnect",desc:"This project offers users a seamless way to connect with trusted veterinarians, " },
-  { name: crackerImg,proj:"Crackers Shop",desc:"Crackers is a delightful platform that celebrates the world of snacks," },
-  // { name: crackerImg,proj:"Crackers Shop",desc:"Crackers is a delightful platform that celebrates the world of snacks," }
-];
-
+import { useEffect, useState } from "react";
+import Navbar from "../components/NavBar";
+import ProjectCard from "../components/ProjectCard";
+import { getproj } from "../services/api";
+import AddComponent from "../components/AddProject";
+import { toast } from "sonner";
+import { MessageCircleWarning } from "lucide-react";
 
 const Projects = () => {
-  const [projectdata, setProjectdata] = useState(null)
+  const [projectdata, setProjectdata] = useState([]);
   const fetchprojects = async () => {
     try {
-      const { data } = await getproj()
-      setProjectdata(data)
+      const { data } = await getproj();
+      setProjectdata(data);
     } catch (error) {
       console.warn(error);
-
+      toast("Error", {
+        className:
+          "bg-gradient-to-r from-yellow-500 to-amber-500 rounded-lg shadow-lg text-white p-3 flex gap-5 text-lg font-bold",
+        icon: <MessageCircleWarning />,
+      });
     }
-  }
-  console.log(projectdata)
+  };
+  console.log(projectdata);
   useEffect(() => {
-    fetchprojects()
-  }, [])
-  if (!projectdata) {
-    return "No data available";
-  }
+    fetchprojects();
+  }, []);
+  // if (!projectdata||projectdata.length===0) {
+  //   return (
+  //     <div className="w-full h-[15vh] flex justify-center items-start mb-0">
+  //         <AddComponent  />
+  //       </div>
+
+  //   )
+  // }
+  console.log(projectdata.coverimg);
   return (
     <>
       <div className="w-full h-45 flex flex-row flex-wrap gap-8 justify-center items-center bg-gradient-to-r from-slate-900 to-slate-700">
         <div className="w-full h-[15vh] flex justify-center items-start mb-0">
-          <AddComponent  />
+          <AddComponent fetchprojects={fetchprojects} />
         </div>
 
-        {
-         
-            <ProjectCard/>
-            // <ProjectCard name={data.name} proj={data.proj} desc={data.desc} key={index}  fetchprojects={fetchprojects}/>
-         
-        }
+        {projectdata.map((data, index) => (
+          <ProjectCard
+            key={index}
+            title={data.title}
+            desc={data.desc}
+            id={data._id}
+            coverimg={data.coverimg}
+            git={data.git}
+            link={data.link}
+            fetchProjects={ fetchprojects}
+          />
+        ))}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Projects
+export default Projects;
